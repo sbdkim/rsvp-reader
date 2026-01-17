@@ -1,67 +1,49 @@
-# 📖 RSVP Reader (ORP Focused Speed Reading)
+# RSVP Reader (ORP)
 
-A lightweight, browser-based **Rapid Serial Visual Presentation (RSVP)** reader designed to improve focus and reading speed — especially helpful for **ADHD readers**.
+A small web app for experimenting with **Rapid Serial Visual Presentation (RSVP)** reading.
 
-This app displays text **one word at a time**, highlights the **Optimal Recognition Point (ORP)** in red, and allows real-time control over reading speed and text size.
-
----
-
-## ✨ Features
-
-- 🧠 RSVP (one word at a time) reading
-- 🔴 ORP highlighting (red focal letter for faster recognition)
-- ⏱ Adjustable speed (WPM)
-  - Slider + number input
-  - Typical range: 100–1200 WPM
-- 🔠 Adjustable text size
-  - Slider + number input
-  - Optimized for high-speed reading
-- ⏸ Play / Pause / Reset
-- ⬅️➡️ Step backward & forward
-- 📊 Progress indicator
-- ⏳ Smart punctuation pauses
-- 🎯 Fixation guide line (optional)
-- ⌨️ Keyboard shortcuts
-  - `Space` → Play / Pause
-  - `← / →` → Step word
-  - `+ / -` → Change text size
-  - `R` → Reset
+It shows text one word at a time, highlights the **Optimal Recognition Point (ORP)** letter in red, and lets you control reading speed and text size in real time.  
+I built this mainly to explore focus-friendly reading patterns (especially for ADHD), and to better understand RSVP-style interfaces.
 
 ---
 
-## 🧩 Why RSVP + ORP?
+## What it does
 
-Traditional reading requires constant eye movement (saccades), which can reduce focus and speed.
-
-RSVP works by:
-- Keeping the eye fixed in one place
-- Presenting words sequentially
-- Highlighting the **Optimal Recognition Point (ORP)** — the letter your brain naturally locks onto
-
-This approach:
-- Reduces eye strain
-- Improves focus
-- Helps maintain attention for ADHD readers
-- Enables faster comprehension with practice
+- Displays text one word at a time (RSVP)
+- Highlights the ORP letter for each word
+- Adjustable reading speed (words per minute)
+- Adjustable text size
+- Play / pause / reset controls
+- Step backward and forward
+- Optional fixation guide line
+- Small pause after punctuation
+- Keyboard shortcuts for most actions
 
 ---
 
-## 🛠 Tech Stack
+## Why RSVP?
 
-This project is intentionally **simple and dependency-free**.
+Normal reading involves a lot of eye movement.  
+RSVP keeps your eyes fixed in one place and moves the words instead.
 
-- HTML5 – structure
-- CSS3 – responsive UI & dark theme
-- Vanilla JavaScript (ES6) – logic & timing
+Highlighting the ORP (the letter your brain tends to lock onto) helps reduce recognition time and makes higher speeds feel more manageable. It’s not for everyone, but it can be useful for focus or speed-reading practice.
+
+---
+
+## Tech
+
+This is intentionally simple.
+
+- HTML
+- CSS
+- Vanilla JavaScript (ES6)
 - No frameworks
 - No backend
-- No build step
+- No build tools
 
-Runs entirely in the browser.
+Everything runs directly in the browser.
 
 ---
 
-## 🚀 Live Demo
-
-👉 Live site:
+## Live demo
 
