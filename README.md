@@ -1,49 +1,59 @@
-# RSVP Reader (ORP)
+# RSVP Speed Reader
 
-A small web app for experimenting with **Rapid Serial Visual Presentation (RSVP)** reading.
+A web-based speed reading tool that uses Rapid Serial Visual Presentation (RSVP) to help you read faster and stay focused. Perfect for people with ADHD or anyone looking to improve their reading speed.
 
-It shows text one word at a time, highlights the **Optimal Recognition Point (ORP)** letter in red, and lets you control reading speed and text size in real time.  
-I built this mainly to explore focus-friendly reading patterns (especially for ADHD), and to better understand RSVP-style interfaces.
+## What is RSVP?
 
----
+RSVP flashes one word at a time on screen with the Optimal Recognition Point (ORP) highlighted in red. Instead of your eyes scanning left to right across lines of text, you focus on a single point while words appear sequentially. This eliminates the need for eye movement and significantly boosts reading speed.
 
-## What it does
+The red letter marks the spot where your eyes should naturally fixate - usually slightly left of center in each word. Your peripheral vision handles the rest.
 
-- Displays text one word at a time (RSVP)
-- Highlights the ORP letter for each word
-- Adjustable reading speed (words per minute)
-- Adjustable text size
-- Play / pause / reset controls
-- Step backward and forward
-- Optional fixation guide line
-- Small pause after punctuation
-- Keyboard shortcuts for most actions
+## Features
 
----
+- **Adjustable reading speed** - Start at 300 WPM and work your way up to 1000+ WPM
+- **Customizable font size** - Make it comfortable for any screen or viewing distance
+- **Progress tracking** - See exactly where you are in your text
+- **Playback controls** - Start, pause, reset, or resume anytime
+- **Clean, distraction-free interface** - Nothing to mess with your focus
 
-## Why RSVP?
+## Tech Stack
 
-Normal reading involves a lot of eye movement.  
-RSVP keeps your eyes fixed in one place and moves the words instead.
+Just vanilla JavaScript, HTML, and CSS. No frameworks, no build process, no dependencies (except Tailwind CSS loaded from CDN for styling). 
 
-Highlighting the ORP (the letter your brain tends to lock onto) helps reduce recognition time and makes higher speeds feel more manageable. It’s not for everyone, but it can be useful for focus or speed-reading practice.
+I wanted to keep this dead simple so anyone can use it without installing a bunch of stuff.
 
----
+## How to Use
 
-## Tech
+1. Open the HTML file in any browser
+2. Paste your text (or use the default intro text)
+3. Click "Start Reading"
+4. Adjust speed and font size in settings if needed
+5. Focus on the red letter and let your brain do the rest
 
-This is intentionally simple.
+## Deployment
 
-- HTML
-- CSS
-- Vanilla JavaScript (ES6)
-- No frameworks
-- No backend
-- No build tools
+Since it's just a single HTML file, you can:
+- Open it locally in your browser (double-click the file)
+- Host it on GitHub Pages
+- Drop it on Netlify
+- Throw it on any static hosting service
 
-Everything runs directly in the browser.
+No server required, no compilation step, no nothing. Just upload and go.
 
----
+## Why I Built This
 
-## Live demo
+I've always struggled with staying focused while reading long articles or documentation. Traditional speed reading techniques felt awkward, but RSVP actually works - it forces your brain to stay engaged with the content instead of wandering off mid-paragraph.
 
+Started as a weekend project to help myself read faster. Figured others might find it useful too.
+
+## Contributing
+
+This is a pretty straightforward tool, but if you have ideas for improvements, feel free to fork it and make it your own. Some things I've thought about adding:
+- Keyboard shortcuts
+- Save reading position
+- Text-to-speech option
+- Different highlighting styles
+
+## License
+
+MIT - do whatever you want with it
