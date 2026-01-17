@@ -1,1 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FocusPoint RSVP Reader</title>
+    <style>
+        :root {
+            --bg-color: #0f0f0f;
+            --card-bg: #1e1e1e;
+            --accent: #ff3e3e;
+            --text-main: #e0e0e0;
+        }
 
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: var(--bg-color); 
+            color: var(--text-main); 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            height: 100vh; 
+            margin: 0; 
+            overflow: hidden;
+        }
+
+        /* Setup Phase Styles */
+        #setup-area { width: 90%; max-width: 700px; transition: opacity 0.3s; }
+        
+        textarea { 
+            width: 100%; height: 250px; 
+            background: var(--card-bg); color: #fff; 
+            border: 1px solid #333; padding: 15px; 
+            border-radius: 12px; font-size: 16px; 
+            resize: none; box-sizing: border-box;
+        }
+
+        .controls { 
+            margin-top: 20px; display: flex; 
+            flex-wrap: wrap; gap: 20px; align-items: center; 
+            justify-content: space-between;
+        }
+
+        /* Reader Phase Styles */
+        #reader-display { 
+            display: none; text-align: center; width: 100%; 
+        }
+
+        #word-container {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 64px;
+            font-weight: bold;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: var(--card-bg);
+            width: 100%;
+            padding: 40px 0;
+            border-top: 1px solid #333;
+            border-bottom: 1px solid #333;
+        }
+
+        .red { color: var(--accent); }
+
+        button { 
+            padding: 12px 30px; cursor: pointer; 
+            background: var(--accent); border: none; 
+            color: white; border-radius: 8px; 
+            font-weight: bold; transition: transform 0.1s;
+        }
+
+        button:active { transform: scale(0.95); }
+
+        .wpm-slider-container { flex-grow: 1; }
+        input[type=range] { width: 100%; accent-color: var(--accent); }
+
+        .instructions { font-size: 0.8em; color: #888; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+    <div id="setup-area">
+        <h2 style="color: var(--accent)">FocusPoint Reader</h2>
+        <textarea id="text-input">To get started, simply paste the content you want to process into this box. This tool uses Rapid Serial Visual Presentation (RSVP) to help you increase your reading speed by focusing your eyes on a single point.
+
+Use the settings below to adjust the Words Per Minute (WPM) to your comfort level. Higher speeds often help people with ADHD maintain focus by reducing the tendency for the mind to wander.
+
+When you're ready, click 'Start Reading'. You can press SPACE to pause or ESC to exit at any time.</textarea>
+        
+        <div class="controls">
+            <div class="wpm-slider-container">
+                <label>Speed: <b id="wpm-val">350</b> WPM</label>
+                <input type="range" id="wpm-slider" min="100" max="1000" value="350">
+            </div>
+            <button onclick="startReading()">START READING</button>
+        </div>
+    </div>
+
+    <div id="reader-display">
+        <div id="word-container">
+            <div id="word-box"></div>
+        </div>
+        <div class="instructions">
+            [SPACE] Pause/Play &nbsp; | &nbsp; [ESC] Stop
+        </div>
+    </div>
+
+    <script>
+        let words = [];
+        let currentIndex = 0;
+        let isPaused = false;
+        let timer = null;
+
+        const slider = document.getElementById('wpm-slider');
+        const wpmVal = document.getElementById('wpm-val');
+        
+        slider.oninput = () => wpmVal.innerText = slider.value;
+
+        // Listen for Keyboard shortcuts
+        window.addEventListener('keydown', (e) => {
+            if (e.code === "Space") {
+                isPaused = !isPaused;
+                if (!isPaused) runLoop(); 
+                e.preventDefault(); 
+            }
+            if (e.key === "Escape") stopReading();
+        });
+
+        function startReading() {
+            const rawText = document.getElementById('text-input').value;
+            if (!rawText.trim()) return;
+            
+            words = rawText.trim().split(/\s+/);
+            currentIndex = 0;
+            isPaused = false;
+            
+            document.getElementById('setup-area').style.display = 'none';
+            document.getElementById('reader-display').style.display = 'block';
+            
+            runLoop();
+        }
+
+        function runLoop() {
+            if (isPaused || currentIndex >= words.length) return;
+
+            renderWord(words[currentIndex]);
+            currentIndex++;
+
+            const wpm = parseInt(slider.value);
+            let delay = 60000 / wpm;
+
+            // ADHD Comfort: Add slight delay for long words or sentence ends
+            const currentWord = words[currentIndex - 1];
+            if (currentWord.endsWith('.') || currentWord.endsWith('!') || currentWord.endsWith('?')) {
+                delay *= 2; 
+            }
+
+            timer = setTimeout(runLoop, delay);
+        }
+
+        function renderWord(word) {
+            // Precise ORP (Optimal Recognition Point) Logic
+            let pivot = 1;
+            if (word.length <= 1) pivot = 1;
+            else if (word.length <= 5) pivot = 2;
+            else if (word.length <= 9) pivot = 3;
+            else if (word.length <= 13) pivot = 4;
+            else pivot = 5;
+
+            const part1 = word.slice(0, pivot - 1);
+            const redLetter = word[pivot - 1] || '';
+            const part2 = word.slice(pivot);
+
+            // Using non-breaking spaces to keep the red letter centered
+            document.getElementById('word-box').innerHTML = 
+                `<span style="text-align:right; display:inline-block; width:45vw;">${part1}</span>` +
+                `<span class="red">${redLetter}</span>` +
+                `<span style="text-align:left; display:inline-block; width:45vw;">${part2}</span>`;
+        }
+
+        function stopReading() {
+            isPaused = true;
+            clearTimeout(timer);
+            document.getElementById('setup-area').style.display = 'block';
+            document.getElementById('reader-display').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
